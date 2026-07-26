@@ -67,4 +67,10 @@ for i, birthday in enumerate(birthdays):
     if getMatch(birthdays) != None:
         simMatch += 1
     print('100.000 simulations run.')
-    
+
+    probability = round(simMatch / 100000 * 100, 2)
+    print('Out of 100,000 simulations of', numBdays, 'people, there was a')
+    print('matching birthday in that group', simMatch, 'times. This means') 
+    print('that', numBdays, 'people have a', probability, '% chance of') 
+    print('having a matching birthday in their group.') 
+    print('That\'s probably more than you would think!')
