@@ -42,35 +42,35 @@ for i, birthday in enumerate(birthdays):
     monthName = MONTHS[birthday.month - 1]
     dateText = '{} {}'.format(monthName, birthday.day)
     print(dateText, end='')
-    print()
-    print()
+print()
+print()
 
-    match = getMatch(birthdays)
-    print('In this simulation, ', end='')
-    if match != None:
-        monthName = MONTHS[match.month - 1]
-        dateText = '{} {}'.format(monthName, match.day)
-        print('multiple people have a birthday on ', dateText)
-    else:
-        print('there are no matching birthdays.')
-    print()
+match = getMatch(birthdays)
+print('In this simulation, ', end='')
+if match != None:
+    monthName = MONTHS[match.month - 1]
+    dateText = '{} {}'.format(monthName, match.day)
+    print('multiple people have a birthday on ', dateText)
+else:
+    print('there are no matching birthdays.')
+print()
 
-    print('Generating ', numBdays, ' random birthdays 100.000 times...')
-    input('Press enter to begin...')
+print('Generating ', numBdays, ' random birthdays 100.000 times...')
+input('Press enter to begin...')
 
-    print('Let\'s run another 100.000 simulations.')
-    simMatch = 0
-    for i in range(100000):
-        if i % 10000 == 0:
-            print(i, 'simulations run...')
+print('Let\'s run another 100.000 simulations.')
+simMatch = 0
+for i in range(100_000):
+    if i % 10_000 == 0:
+        print(i, 'simulations run...')
     birthdays = getBirthdays(numBdays)
     if getMatch(birthdays) != None:
-        simMatch += 1
-    print('100.000 simulations run.')
+        simMatch = simMatch + 1
+print('100.000 simulations run.')
 
-    probability = round(simMatch / 100000 * 100, 2)
-    print('Out of 100,000 simulations of', numBdays, 'people, there was a')
-    print('matching birthday in that group', simMatch, 'times. This means') 
-    print('that', numBdays, 'people have a', probability, '% chance of') 
-    print('having a matching birthday in their group.') 
-    print('That\'s probably more than you would think!')
+probability = round(simMatch / 100_000 * 100, 2)
+print('Out of 100,000 simulations of', numBdays, 'people, there was a')
+print('matching birthday in that group', simMatch, 'times. This means') 
+print('that', numBdays, 'people have a', probability, '% chance of') 
+print('having a matching birthday in their group.') 
+print('That\'s probably more than you would think!')
