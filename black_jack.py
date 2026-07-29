@@ -71,6 +71,37 @@ def main():
 # Stand/doubling down stops the player's turn.
             if move in ('S', 'D'):
                 break
+# Handle the dealer's actions: 
+        if getHandValue(playerHand) <= 21: 
+# The dealer hits:
+            while getHandValue(dealerHand) < 17: 
+                print('Dealer hits...') 
+                dealerHand.append(deck.pop()) 
+                displayHands(playerHand, dealerHand, False) 
+# The dealer has busted.
+                if getHandValue(dealerHand) > 21: 
+                    break 
+                input('Press Enter to continue...')
+                print('\n\n')
+#Show the final hands
+        displayHands(playerHand, dealerHand, True) 
+        playerValue = getHandValue(playerHand) 
+        dealerValue = getHandValue(dealerHand) 
+# Handle whether the player won, lost, or tied: 
+        if dealerValue > 21: 
+            print('Dealer busts! You win ${}!'.format(bet))
+            money += bet 
+        elif (playerValue > 21) or (playerValue < dealerValue):
+            print('You lost!')
+            money -= bet
+        elif playerValue > dealerValue:
+            print('You won ${}!'.format(bet))
+            money += bet
+        elif playerValue == dealerValue:
+            print('It\'s a tie, the bet is returned to you.')
+            input('Press Enter to continue...')
+            print('\n\n')
+
 
 def getBet(money):
     pass
