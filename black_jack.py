@@ -102,9 +102,21 @@ def main():
             input('Press Enter to continue...')
             print('\n\n')
 
+#Ask the player how much they want to bet for this round
+def getBet(maxBet):
+    while True:
+        print('How much do you bet? (1 - {} or QUIT)'.format(maxBet))
+        bet = input('> ').upper().strip()
+        if bet == 'QUIT':
+            print('Thanks for playing!')
+            sys.exit()
 
-def getBet(money):
-    pass
+        if not bet.isdecimal():
+            continue
+
+        bet = int(bet)
+        if 1 <= bet <= maxBet:
+            return bet
 
 def getDeck():
     pass
