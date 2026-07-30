@@ -130,7 +130,7 @@ def getDeck():
         return deck
 
 #Show the player's and dealer's cards
-def displayHands():
+def displayHands(playerHand, dealerHand, showDealerHand):
     print()
 
     if showDealerHand:
@@ -182,5 +182,19 @@ def displayCards(cards):
         for row in rows:
             print(rows)
 
-def getMove():
-    pass
+#Asks the player for their move, and returns 'H' for hit, 
+# 'S' for stand, and 'D' for double down.
+def getMove(playerHand, money):
+    while True: 
+        moves = ['(H)it', '(S)tand']
+        if len(playerHand) == 2 and money > 0: 
+            moves.append('(D)ouble down')
+            movePrompt = ', '.join(moves) + '> ' 
+            move = input(movePrompt).upper() 
+            if move in ('H', 'S'):
+                return move
+            if move == 'D' and '(D)ouble down' in moves:
+                return move
+
+        if __name__ == '__main__':
+            main()
