@@ -171,14 +171,14 @@ def displayCards(cards):
     for i, card in enumerate(cards):
         rows[0] += ' ___ '
         if card == BACKSIDE:
-            rows[1] += ' |## | '
-            rows[2] += ' |###| '
-            rows[3] += ' |_##| '
+            rows[1] += '|## | '
+            rows[2] += '|###| '
+            rows[3] += '|_##| '
         else:
             rank, suit = card
-            rows[1] += ' |{} | '.format(rank.ljust(2))
-            rows[2] += ' | {} | '.format(suit)
-            rows[3] += ' |_{}| '.format(rank.rjust(2))
+            rows[1] += '|{} | '.format(rank.ljust(2))
+            rows[2] += '| {} | '.format(suit)
+            rows[3] += '|_{}| '.format(rank.rjust(2))
         for row in rows:
             print(rows)
 
