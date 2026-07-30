@@ -129,11 +129,40 @@ def getDeck():
         random.shuffle(deck)
         return deck
 
-def getHandValue():
-    pass
-
+#Show the player's and dealer's cards
 def displayHands():
-    pass
+    print()
+
+    if showDealerHand:
+        print('Dealer: ???', getHandValue(dealerHand))
+        displayCards(dealerHand)
+    else:
+#Hide the dealer's first card
+        print('Dealer: ???')
+        displayCards([BACKSIDE] + dealerHand[:1])
+#Show the player's cards
+    print('PLAYER:', getHandValue(playerHand))
+    displayCards(playerHand)
+
+#Return the value of the cards
+def getHandValue(cards):
+    value = 0
+    numberOfAces = 0
+#Add the value for non-ace cards
+    for card in cards:
+        rank = card[0]
+        if rank == 'A':
+            numberOfAces += 1
+        elif rank in ('K', 'Q', 'J'):
+            value += 10
+        else:
+            value += int(rank)
+#Add the value for the Aces
+    value += numberOfAces
+    for i in range(numberOfAces):
+        if value + 10 <= 21:
+            value += 10
+    return value    
 
 def getMove():
     pass
