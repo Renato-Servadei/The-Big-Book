@@ -117,9 +117,17 @@ def getBet(maxBet):
         bet = int(bet)
         if 1 <= bet <= maxBet:
             return bet
-
+        
+#Return a list of (rank, suit) tuples for all 52 cards
 def getDeck():
-    pass
+    deck = []
+    for suit in (HEARTS, DIAMONDS, SPADES, CLUBS):
+        for rank in range(2, 11):
+            deck.append((str(rank), suit))
+        for rank in ('J', 'Q', 'K', 'A'):
+            deck.append((rank, suit))
+        random.shuffle(deck)
+        return deck
 
 def getHandValue():
     pass
