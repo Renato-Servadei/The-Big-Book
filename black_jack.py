@@ -44,7 +44,7 @@ def main():
         print('Bet: ', bet)
 # Keep looping until player stands or busts.
         while True:
-            displayHands(dealerHand, playerHand, False)
+            displayHands(playerHand, dealerHand, False)
             print()
 #Check if the player has bust
             if getHandValue(playerHand) > 21:
@@ -169,7 +169,7 @@ def displayCards(cards):
     rows = ['', '', '', '', '']
 
     for i, card in enumerate(cards):
-        rows[0] += ' ___ '
+        rows[0] += ' ___  '
         if card == BACKSIDE:
             rows[1] += '|## | '
             rows[2] += '|###| '
@@ -178,9 +178,9 @@ def displayCards(cards):
             rank, suit = card
             rows[1] += '|{} | '.format(rank.ljust(2))
             rows[2] += '| {} | '.format(suit)
-            rows[3] += '|_{}| '.format(rank.rjust(2))
+            rows[3] += '|_{}| '.format(rank.rjust(2, '_'))
         for row in rows:
-            print(rows)
+            print(row)
 
 #Asks the player for their move, and returns 'H' for hit, 
 # 'S' for stand, and 'D' for double down.
@@ -189,12 +189,12 @@ def getMove(playerHand, money):
         moves = ['(H)it', '(S)tand']
         if len(playerHand) == 2 and money > 0: 
             moves.append('(D)ouble down')
-            movePrompt = ', '.join(moves) + '> ' 
-            move = input(movePrompt).upper() 
-            if move in ('H', 'S'):
-                return move
-            if move == 'D' and '(D)ouble down' in moves:
-                return move
+        movePrompt = ', '.join(moves) + '> ' 
+        move = input(movePrompt).upper() 
+        if move in ('H', 'S'):
+            return move
+        if move == 'D' and '(D)ouble down' in moves:
+            return move
 
 if __name__ == '__main__':
             main()
