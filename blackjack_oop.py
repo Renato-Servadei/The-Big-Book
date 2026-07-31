@@ -101,3 +101,22 @@ class Game:
         while dealer.value() < 17:
             print("Dealer hits...")
             dealer.add_card(deck.draw())
+
+    def resolve_round(self, player, dealer, bet):
+        player_val = player.value()
+        dealer_val = dealer.value()
+
+        print(f"Player: {player_val} | Dealer: {dealer_val}")
+
+        if dealer_val > 21 or player_val > dealer_val:
+            print("You win!")
+            self.money += bet
+        elif player_val < dealer_val:
+            print("You lose!")
+            self.money -= bet
+        else:
+            print("Tie!")
+
+if __name__ == "__main__":
+    game = Game()
+    game.start()
