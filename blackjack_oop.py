@@ -51,3 +51,32 @@ class Hand:
                 value += 10
 
         return value
+
+class Game:
+    def __init__(self):
+        self.money = 5000
+
+    def start(self):
+        while True:
+            if self.money <= 0:
+                print("You're broke!")
+                break
+
+            print(f"Money: {self.money}")
+            bet = self.get_bet()
+
+            deck = Deck()
+
+            player = Hand()
+            dealer = Hand()
+
+            player.add_card(deck.draw())
+            player.add_card(deck.draw())
+
+            dealer.add_card(deck.draw())
+            dealer.add_card(deck.draw())
+
+            self.player_turn(player, dealer, deck, bet)
+            self.dealer_turn(dealer, deck)
+
+            self.resolve_round(player, dealer, bet)
