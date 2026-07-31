@@ -80,3 +80,24 @@ class Game:
             self.dealer_turn(dealer, deck)
 
             self.resolve_round(player, dealer, bet)
+
+def player_turn(self, player, dealer, deck, bet):
+    while True:
+        print("Player:", player.value())
+
+        if player.value() > 21:
+            break
+
+        move = input("(H)it or (S)tand: ").upper()
+
+        if move == 'H':
+            card = deck.draw()
+            print(f"You drew {card}")
+            player.add_card(card)
+        elif move == 'S':
+            break
+        
+def dealer_turn(self, dealer, deck):
+    while dealer.value() < 17:
+        print("Dealer hits...")
+        dealer.add_card(deck.draw())
