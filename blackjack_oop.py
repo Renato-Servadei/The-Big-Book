@@ -81,6 +81,23 @@ class Game:
 
             self.resolve_round(player, dealer, bet)
 
+    def get_bet(self):
+        while True:
+            print(f"How much do you bet? (1 - {self.money} or QUIT)")
+            bet = input("> ").upper().strip()
+
+            if bet == "QUIT":
+                print("Thanks for playing!")
+                exit()
+
+            if not bet.isdecimal():
+                continue
+
+            bet = int(bet)
+
+            if 1 <= bet <= self.money:
+                return bet
+
     def player_turn(self, player, dealer, deck, bet):
         while True:
             print("Player:", player.value())
