@@ -143,7 +143,7 @@ def main():
         service.initial_deal(player, dealer)
 
         ui.show_player(player)
-        ui.show_player(dealer, hide=True)
+        ui.show_dealer(dealer, hide=True)
 
         # Turno jugador
         while not BlackjackRules.is_bust(player.hand):
