@@ -27,3 +27,14 @@ class Hand:
                 value += 10
 
         return value
+
+class Player:
+    def __init__(self, money):
+        self.money = money
+        self.hand = Hand()
+
+    def bet(self, amount):
+        if amount > self.money:
+            raise ValueError("Not enough money")
+        self.money -= amount
+        return amount
