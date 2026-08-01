@@ -62,3 +62,19 @@ class BlackjackRules:
         if p < d:
             return "dealer_win"
         return "tie"
+
+class GameService:
+    def __init__(self, deck):
+        self.deck = deck
+
+    def initial_deal(self, player, dealer):
+        for _ in range(2):
+            player.hand.add(self.deck.draw())
+            dealer.hand.add(self.deck.draw())
+
+    def player_hit(self, player):
+        player.hand.add(self.deck.draw())
+
+    def dealer_play(self, dealer):
+        while BlackjackRules.dealer_should_hit(dealer.hand):
+            dealer.hand.add(self.deck.draw())
