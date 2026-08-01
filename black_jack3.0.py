@@ -38,3 +38,27 @@ class Player:
             raise ValueError("Not enough money")
         self.money -= amount
         return amount
+
+class BlackjackRules:
+    @staticmethod
+    def is_bust(hand):
+        return hand.value() > 21
+
+    @staticmethod
+    def dealer_should_hit(hand):
+        return hand.value() < 17
+
+    @staticmethod
+    def compare(player_hand, dealer_hand):
+        p = player_hand.value()
+        d = dealer_hand.value()
+
+        if p > 21:
+            return "player_bust"
+        if d > 21:
+            return "dealer_bust"
+        if p > d:
+            return "player_win"
+        if p < d:
+            return "dealer_win"
+        return "tie"
