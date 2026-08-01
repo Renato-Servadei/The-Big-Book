@@ -1,3 +1,34 @@
+import random
+
+class Deck:
+    def __init__(self, cards=None):
+        # Permite inyectar cartas (clave para testing)
+        if cards is not None:
+            self.cards = cards
+        else:
+            self.cards = self._build_standard_deck()
+            self.shuffle()
+
+    def _build_standard_deck(self):
+        suits = ['♥', '♦', '♠', '♣']
+        cards = []
+
+        for suit in suits:
+            for rank in range(2, 11):
+                cards.append(Card(str(rank), suit))
+            for rank in ('J', 'Q', 'K', 'A'):
+                cards.append(Card(rank, suit))
+
+        return cards
+
+    def shuffle(self):
+        random.shuffle(self.cards)
+
+    def draw(self):
+        if not self.cards:
+            raise ValueError("Deck is empty")
+        return self.cards.pop()
+    
 class Card:
     def __init__(self, rank, suit):
         self.rank = rank
@@ -94,3 +125,32 @@ class ConsoleUI:
 
     def ask_bet(self, money):
         return int(input(f"Bet (1-{money}): "))
+
+def main():
+    deck = Deck()
+    player = Player(5000)
+    dealer = Player(0)
+    ui = ConsoleUI()
+    service = GameService(deck)
+
+    bet = ui.ask_bet(player.money)
+    player.bet(bet)
+
+    service.initial_deal(player, dealer)
+
+    # Turno jugador
+    while not BlackjackRules.is_bust(player.hand):
+        ui.show_player(player)
+        move = ui.ask_move()
+
+        if move == 'H':
+            service.player_hit(player)
+        else:
+            break
+
+    # Turno dealer
+    service.dealer_play(dealer)
+
+    # Resultado
+    result = BlackjackRules.compare(player.hand, dealer.hand)
+    print("Result:", result)
