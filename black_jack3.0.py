@@ -78,3 +78,19 @@ class GameService:
     def dealer_play(self, dealer):
         while BlackjackRules.dealer_should_hit(dealer.hand):
             dealer.hand.add(self.deck.draw())
+
+class ConsoleUI:
+    def show_player(self, player):
+        print("Player:", player.hand.value())
+
+    def show_dealer(self, dealer, hide=False):
+        if hide:
+            print("Dealer: [hidden]")
+        else:
+            print("Dealer:", dealer.hand.value())
+
+    def ask_move(self):
+        return input("(H)it or (S)tand: ").upper()
+
+    def ask_bet(self, money):
+        return int(input(f"Bet (1-{money}): "))
