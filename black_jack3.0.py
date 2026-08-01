@@ -127,30 +127,63 @@ class ConsoleUI:
         return int(input(f"Bet (1-{money}): "))
 
 def main():
-    deck = Deck()
-    player = Player(5000)
-    dealer = Player(0)
     ui = ConsoleUI()
-    service = GameService(deck)
+    player = Player(5000)
+    while True:
+        if player.money <= 0:
+            print("You're broke!")
+            break
+        deck = Deck()
+        dealer = Player(0)
+        service = GameService(deck)
 
-    bet = ui.ask_bet(player.money)
-    player.bet(bet)
+        bet = ui.ask_bet(player.money)
+        player.bet(bet)
 
-    service.initial_deal(player, dealer)
+        service.initial_deal(player, dealer)
 
-    # Turno jugador
-    while not BlackjackRules.is_bust(player.hand):
         ui.show_player(player)
-        move = ui.ask_move()
+        ui.show_player(dealer, hide=True)
 
-        if move == 'H':
-            service.player_hit(player)
+        # Turno jugador
+        while not BlackjackRules.is_bust(player.hand):
+            move = ui.ask_move()
+
+            if move == 'H':
+                service.player_hit(player)
+                ui.show_player(player)
+            else:
+                break
+
+        # Turno dealer
+        if not BlackjackRules.is_bust(player.hand):
+            service.dealer_play(dealer)
+
+        # Mostrar manos finales 
+        print("\nFinal hands:")
+        ui.show_player(player)
+        ui.show_dealer(dealer, hide=False)
+
+        # Resultado
+        result = BlackjackRules.compare(player.hand, dealer.hand)
+        print("Result:", result)
+        if result in ("player_win", "dealer_bust"):
+            print("You win!")
+            player.money += bet
+        elif result in ("dealer_win", "player_bust"):
+            print("You lose!")
         else:
+            print("Tie!")
+            player.money += bet
+
+        # Resetear manos 
+        player.hand = Hand()
+        dealer.hand = Hand()
+
+        # Continuar o salir
+        again = input("\nPlay again? (Y/N): ").upper()
+        if again != 'Y':
             break
 
-    # Turno dealer
-    service.dealer_play(dealer)
-
-    # Resultado
-    result = BlackjackRules.compare(player.hand, dealer.hand)
-    print("Result:", result)
+if __name__ == '__main__':
+    main()
