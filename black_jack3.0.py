@@ -110,22 +110,65 @@ class GameService:
         while BlackjackRules.dealer_should_hit(dealer.hand):
             dealer.hand.add(self.deck.draw())
 
+# class ConsoleUI:
+#     def show_player(self, player):
+#         print("Player:", player.hand.value())
+
+#     def show_dealer(self, dealer, hide=False):
+#         if hide:
+#             print("Dealer: [hidden]")
+#         else:
+#             print("Dealer:", dealer.hand.value())
+
+#     def ask_move(self):
+#         return input("(H)it or (S)tand: ").upper()
+
+#     def ask_bet(self, money):
+#         return int(input(f"Bet (1-{money}): "))
+
 class ConsoleUI:
+
+    def format_hand(self, hand, hide_first=False):
+        cards = []
+
+        for i, card in enumerate(hand.cards):
+            if i == 0 and hide_first:
+                cards.append("[Hidden]")
+            else:
+                cards.append(f"{card.rank}{card.suit}")
+
+        return ", ".join(cards)
+
     def show_player(self, player):
-        print("Player:", player.hand.value())
+        cards = self.format_hand(player.hand)
+        value = player.hand.value()
+        print(f"Player: {cards}  (value: {value})")
 
     def show_dealer(self, dealer, hide=False):
+        cards = self.format_hand(dealer.hand, hide_first=hide)
+
         if hide:
-            print("Dealer: [hidden]")
+            print(f"Dealer: {cards}")
         else:
-            print("Dealer:", dealer.hand.value())
+            value = dealer.hand.value()
+            print(f"Dealer: {cards}  (value: {value})")
 
     def ask_move(self):
         return input("(H)it or (S)tand: ").upper()
 
     def ask_bet(self, money):
-        return int(input(f"Bet (1-{money}): "))
+        while True:
+            bet = input(f"Bet (1-{money}): ")
 
+            if not bet.isdecimal():
+                print("Invalid number.")
+                continue
+
+            bet = int(bet)
+
+            if 1 <= bet <= money:
+                return bet
+            
 def main():
     ui = ConsoleUI()
     player = Player(5000)
@@ -143,7 +186,7 @@ def main():
         service.initial_deal(player, dealer)
 
         ui.show_player(player)
-        ui.show_dealer(dealer, hide=True)
+        ui.show_dealer(dealer, hide=False)
 
         # Turno jugador
         while not BlackjackRules.is_bust(player.hand):
