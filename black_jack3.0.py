@@ -34,6 +34,9 @@ class Card:
         self.rank = rank
         self.suit = suit
 
+    def __str__(self):
+        return f"{self.rank}{self.suit}"
+
 class Hand:
     def __init__(self):
         self.cards = []
@@ -135,7 +138,7 @@ class ConsoleUI:
             if i == 0 and hide_first:
                 cards.append("[Hidden]")
             else:
-                cards.append(f"{card.rank}{card.suit}")
+                cards.append(str(card))
 
         return ", ".join(cards)
 
@@ -212,7 +215,7 @@ def main():
         print("Result:", result)
         if result in ("player_win", "dealer_bust"):
             print("You win!")
-            player.money += bet
+            player.money += bet * 2
         elif result in ("dealer_win", "player_bust"):
             print("You lose!")
         else:
